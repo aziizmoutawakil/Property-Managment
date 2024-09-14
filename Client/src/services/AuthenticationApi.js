@@ -22,13 +22,14 @@ function setCookie(name, value, days) {
   expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
   document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;Secure`;
 }
+
 export const loginUser = async (username, password) => {
   try {
     const response = await fetch('http://localhost:4000/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
-      credentials: 'include',  // This ensures cookies are sent with the request
+      credentials: 'include',  
     });
 
     if (!response.ok) {
@@ -43,14 +44,11 @@ export const loginUser = async (username, password) => {
   }
 };
 
-
-
-
 export const checkAuth = async () => {
   try {
     const response = await fetch('http://localhost:4000/auth/me', {
       method: 'GET',
-      credentials: 'include', // Include cookies in the request
+      credentials: 'include', 
     });
 
     if (!response.ok) {
@@ -62,6 +60,43 @@ export const checkAuth = async () => {
     return data;
   } catch (error) {
     console.error('User not authenticated', error);
+    throw error;
+  }
+};
+
+
+export const logoutUser = async () => {
+  try {
+    const response = await fetch('http://localhost:4000/auth/logout', {
+      method: 'POST',
+      credentials: 'include', 
+    });
+
+    if (!response.ok) {
+      throw new Error(`Logout failed: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error logging out:', error);
+    throw error;
+  }
+};
+
+export const fetchUserData = async () => {
+  try {
+    const response = await fetch('http://localhost:4000/auth/me', {
+      method: 'GET',
+      credentials: 'include', 
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user data: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user data:', error);
     throw error;
   }
 };

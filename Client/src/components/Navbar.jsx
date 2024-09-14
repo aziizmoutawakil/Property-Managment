@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { logoutUser, fetchUserData } from '../services/AuthenticationApi'; // Adjust the path as necessary
+
 function Navbar({ isLoggedIn, setIsLoggedIn }) {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchUserData()
+        .then(data => setUsername(data.user.username))
+        .catch(error => console.error('Error fetching user data', error));
+    }
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:4000/auth/logout', {}, { withCredentials: true });
+      await logoutUser();
       setIsLoggedIn(false);
     } catch (error) {
       console.error('Error during logout', error);
@@ -15,15 +25,21 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-semibold">MyApp</div>
+        <div className="text-white text-xl font-semibold">Properties Management</div>
         <div>
           {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
-            >
-              Logout
-            </button>
+            <div className='flex gap-2'>
+              <h1 className="text-white px-4 py-2  rounded  transition duration-300">
+               Welcom Back <span className='uppercase'> {username || 'User'} </span>
+              </h1>
+              <Link
+                to='/'
+                onClick={handleLogout}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
+              >
+                Logout
+              </Link>
+            </div>
           ) : (
             <div className="flex space-x-4">
               <Link to='/login' className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">

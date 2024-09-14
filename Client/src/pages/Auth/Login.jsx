@@ -11,7 +11,7 @@ function Login({ setIsLoggedIn }) {
     e.preventDefault();
     try {
       await loginUser(username, password);
-      setIsLoggedIn(true); // Set login state to true after successful login
+      setIsLoggedIn(true); 
       navigate("/");
     } catch (error) {
       setError("Failed to login. Please check your credentials.");
