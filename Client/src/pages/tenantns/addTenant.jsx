@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addProperty } from '../../services/PropertyApi';
+import { addTenant } from '../../services/TenantApi';
+import { fetchProperties } from '../../services/PropertyApi';
 import { Link } from 'react-router-dom';
-function AddProperties() {
+
+function AddTenant() {
   const [formData, setFormData] = useState({
     name: '',
-    address: '',
+    contact: '',
     section: '',
-    number_of_units: '',
-    rental_cost: ''
+    propertyId: '',
   });
+  const [properties, setProperties] = useState([]); 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const fetchAllProperties = async () => {
+      try {
+        const response = await fetchProperties();
+        setProperties(response); 
+      } catch (error) {
+        setError('Failed to fetch properties.');
+      }
+    };
+
+    fetchAllProperties();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,17 +37,17 @@ function AddProperties() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addProperty(formData);
-      navigate('/properties');
+      await addTenant(formData);
+      navigate('/tenants');
     } catch (error) {
-      setError('Failed to add property. Please check your input and try again.');
+      setError('Failed to add tenant. Please check your input and try again.');
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Create Property</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Create Tenant</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <input
@@ -45,40 +61,37 @@ function AddProperties() {
             />
             <input
               type="text"
-              id="address"
-              name="address"
-              value={formData.address}
+              id="contact"
+              name="contact"
+              value={formData.contact}
               onChange={handleChange}
-              placeholder="Address"
+              placeholder="Contact"
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-3"
             />
             <input
               type="text"
-              id="type"
-              name="type"
-              value={formData.type}
+              id="section"
+              name="section"
+              value={formData.section}
               onChange={handleChange}
-              placeholder="Type"
+              placeholder="Section"
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-3"
             />
-            <input
-              type="text"
-              id="number_of_units"
-              name="number_of_units"
-              value={formData.number_of_units}
+
+            <select
+              id="propertyId"
+              name="propertyId"
+              value={formData.propertyId}
               onChange={handleChange}
-              placeholder="Number of Units"
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-3"
-            />
-            <input
-              type="text"
-              id="rental_cost"
-              name="rental_cost"
-              value={formData.rental_cost}
-              onChange={handleChange}
-              placeholder="Rental Cost"
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8c0327] focus:ring-[#8c0327] focus:ring-opacity-50 p-3"
-            />
+            >
+              <option value="" disabled>Select Property</option>
+              {properties.map((property) => (
+                <option key={property.id} value={property.id}>
+                  {property.name}
+                </option>
+              ))}
+            </select>
           </div>
           {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="flex justify-between mt-6">
@@ -86,10 +99,10 @@ function AddProperties() {
               type="submit"
               className="bg-[#295F98] hover:bg-[#386596] text-white font-bold py-3 px-6 rounded-lg transition-colors"
             >
-              Create Property
+              Create Tenant
             </button>
             <Link
-              to="/properties"
+              to="/tenants"
               className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg transition-colors"
             >
               Back
@@ -101,4 +114,4 @@ function AddProperties() {
   );
 }
 
-export default AddProperties;
+export default AddTenant;

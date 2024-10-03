@@ -48,7 +48,8 @@ function Properties() {
             <li key={property.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
               <div className="p-6">
                 <h4 className="text-2xl font-bold text-gray-800 mb-2">{property.name}</h4>
-                <p className="text-gray-600 mb-4">{property.address}</p>
+                <p className="text-gray-600 mb-1">{property.address}</p>
+                <p className=" text-xl text-gray-800 mb-2">{property.rental_cost} Dhs</p>
                 <div className="flex justify-between items-center">
                   <Link
                     to={`/updateproperty/${property.id}`}

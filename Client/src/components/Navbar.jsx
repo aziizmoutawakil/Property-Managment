@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { logoutUser, fetchUserData } from '../services/AuthenticationApi'; // Adjust the path as necessary
+import { logoutUser, fetchUserData } from '../services/AuthenticationApi'; 
 
 function Navbar({ isLoggedIn, setIsLoggedIn }) {
   const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-semibold">Properties Management</div>
+        <Link to='/' className="text-white text-xl font-semibold">Properties Management</Link>
         <div>
           {isLoggedIn ? (
             <div className='flex gap-2'>

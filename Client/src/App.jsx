@@ -3,9 +3,12 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Properties from './pages/properties/Properties';
-import AddProperties from './pages/properties/addProperties';
+import AddProperties from './pages/properties/AddProperties';
 import UpdateProperties from './pages/properties/UpdateProperties';
-import Tenants from './pages/Tenants';
+
+import Tenants from './pages/tenantns/Tenants';
+import AddTenant from './pages/tenantns/addTenant';
+
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Navbar from "./components/Navbar";
@@ -38,7 +41,10 @@ function App() {
         <Route path="/addproperty" element={<AddProperties />} />
         <Route path="/updateproperty/:id" element={<UpdateProperties />} />
         <Route path="/properties" element={<Properties />} />
+        
         <Route path="/tenants" element={<Tenants />} />
+        <Route path="/addtenant" element={<AddTenant />} />
+     
       </Routes>
     </Router>
   );
