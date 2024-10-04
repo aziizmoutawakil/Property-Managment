@@ -2,7 +2,18 @@ const { Tenant } = require('../models');
 
 
 
+exports.ViewTenant = async (req,res) => {
+  try {
+    const tenant  = await Tenant.findByPk(req.params.id)
+    if (!tenant) {
+      res.status(404).json('Tenant Not Found')
+    }
+    res.status(200).json(tenant)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
 
+  }
+}
 exports.ViewTenants = async(req,res) =>{
   try {
     const Tenants = await Tenant.findAll()

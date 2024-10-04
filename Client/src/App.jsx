@@ -8,6 +8,7 @@ import UpdateProperties from './pages/properties/UpdateProperties';
 
 import Tenants from './pages/tenantns/Tenants';
 import AddTenant from './pages/tenantns/addTenant';
+import UpdateTenants from './pages/tenantns/updateTenant' 
 
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
@@ -44,6 +45,7 @@ function App() {
         
         <Route path="/tenants" element={<Tenants />} />
         <Route path="/addtenant" element={<AddTenant />} />
+        <Route path="/updatetenant/:id" element={<UpdateTenants />} />
      
       </Routes>
     </Router>

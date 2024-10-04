@@ -54,11 +54,11 @@ export const addProperty = async (propertyData) => {
 export const updateProperty = async (id, property) => {
   try {
     const response = await axios.put(`http://localhost:4000/property/update/${id}`, property, { headers: {
-      'Authorization': `Bearer ${getAuthToken()}`, 
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,} );
-    return response.data;
+    'Authorization': `Bearer ${getAuthToken()}`, 
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,} );
+  return response.data;
   } catch (error) {
     console.error('Error updating property:', error);
     throw error; 

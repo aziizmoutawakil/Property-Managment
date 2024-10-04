@@ -40,7 +40,7 @@ function AddTenant() {
       await addTenant(formData);
       navigate('/tenants');
     } catch (error) {
-      setError('Failed to add tenant. Please check your input and try again.');
+      setError('Failed to add tenant. Please Login first.');
     }
   };
 

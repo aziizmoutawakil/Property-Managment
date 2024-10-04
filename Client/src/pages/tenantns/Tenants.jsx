@@ -64,10 +64,10 @@ function Tenants() {
           </div>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {Array.isArray(Tenants) && Tenants.length > 0 ? (
             Tenants.map((tenant) => (
-              <li key={tenant.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+              <li key={tenant.id} className="bg-white shadow-lg rounded-lg overflow-hidden  hover:shadow-lg hover:shadow-gray-400 ">
                 <div className="p-6">
                   <h4 className="text-2xl font-bold text-gray-800 mb-2">{tenant.name}</h4>
                   <p className="text-gray-600 mb-1">{tenant.contact}</p>
